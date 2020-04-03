@@ -1,0 +1,91 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark white double-nav scrolling-navbar">
+  <div class="container">
+
+    <!-- Brand -->
+    <a class="navbar-brand waves-effect" href="/">
+      <i class="fas fa-home text-primary"></i>
+    </a>
+
+    <!-- Collapse -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <!-- Left -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="{% url 'core:page' 'about' %}">
+          <i class="fas fa-info ml-2 text-warning"></i>
+          About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="">
+          <i class="fas fa-blog text-danger"></i>
+          Blog</a>
+        </li> 
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"><strong class="blue-text">More</strong></a>
+          <div class="dropdown-menu dropdown-primary bg-light" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'core:page' 'about' %}">About</a>
+            <a class="dropdown-item" href="{% url 'core:contact' %}">Contact Us
+              <i class="far fa-comments"></i>
+            </a>
+            <a class="dropdown-item" href="">Blog</a>
+            <a class="dropdown-item" href="{% url 'core:page' 'fags' %}">FAQs</a>
+            <a class="dropdown-item" href="{% url 'core:page' 'help' %}"> Help
+              <i class="far fa-question-circle"></i>
+            </a>
+            <a class="dropdown-item" href="{% url 'core:page' 'terms' %}">Terms &amp; Conditions</a>
+            <a class="dropdown-item" href="{% url 'core:page' 'privacy' %}">Privacy Policy</a>
+            
+          </div>
+        </li>
+      </ul>
+
+
+      <!-- Right  -->
+      <ul class="navbar-nav nav-flex-icons">     
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"><strong>Profile</strong>
+            <i class="far fa-user-circle green-text"></i>
+          </a>
+          <div class="dropdown-menu dropdown-primary bg-light" aria-labelledby="navbarDropdownMenuLink">
+            {% if user.is_authenticated %}
+              {% if is_admin %}
+                <a class="dropdown-item" href="{% url 'admin:index' %}">Admin
+                  <i class="fa fa-user-secret text-warning z-depth-1 "></i>
+                </a>
+              {% comment %} {% else %} {% endcomment %}
+                
+              {% endif %}
+                <a class="dropdown-item" href="#">Dashboard
+                  <i class="far fa-user-circle mr-2 text-info"></i>
+                </a>
+                <a class="dropdown-item" href=""> Logout
+                  <i class="fas fa-sign-out-alt text-danger"></i>
+                </a>
+            {% else %}
+                <a class="dropdown-item" href="">
+                  <i class="fas fa-sign-in-alt text-danger"></i>Login
+                </a>
+                <a class="dropdown-item" href="">
+                  <i class="fas fa-user-plus text-warning"></i>Signup
+                </a>
+            {% endif %}
+          </div>
+        </li>
+        
+      </ul>
+
+    </div>
+
+  </div>
+</nav>

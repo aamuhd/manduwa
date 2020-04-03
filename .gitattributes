@@ -1,0 +1,4 @@
+*.py    eol=lf
+*.js    eol=lf
+*.jsx   eol=lf
+*.json  eol=lf
