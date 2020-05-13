@@ -15,7 +15,6 @@ class MainPage(models.Model):
     img = models.ImageField(verbose_name="Main Image", blank=True, null=True, upload_to='images', help_text="Image size should be 922x731 px")
     body = RichTextUploadingField(blank=True, null=True)
     vid_file = models.FileField(upload_to='videos', blank=True, null=True, help_text="Upload Video File")
-    youtube_video_id = models.CharField(blank=True, null=True, max_length=20, help_text="Youtube Video ID e.g L0I7i_lE5zA. Not Complete Url")
     extra_info = RichTextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now= False)
     updated = models.DateTimeField(auto_now_add=False, auto_now= True)
@@ -26,13 +25,7 @@ class MainPage(models.Model):
         verbose_name_plural = 'Main Pages'
         ordering = ["-title", ]
 
-    def get_video_link(self):
-        if self.youtube_video_id:
-            return "https://www.youtube.com/embed/{}".format(self.youtube_video_id)
-        elif self.vid_file:
-            return self.vid_file.url
-        else:
-            return None
+   
     def __str__(self):
         return self.title
 
@@ -74,17 +67,19 @@ GENDER = (
 )
 
 class UserProfile(models.Model):
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    slug = models.SlugField()
     uid = models.CharField(default=getUniqueId, max_length=20, editable=False)
     fullname = models.CharField(max_length=50, blank=True, null=True)
-    image = models.ImageField(blank=True, null=True, upload_to='profile_pics', help_text="User Profile Picture")
-    dob = models.DateField(blank=True, null=True,help_text='Date of Birth')
+    image = models.ImageField(blank=True, null=True, upload_to='profile_pics')
+    dob = models.DateField(blank=True, null=True)
     phone_number = models.CharField(blank=True, null=True, max_length=15)
     work_email = models.EmailField(default='info@dabolinux.com') #TODO: fix here
     address = models.ForeignKey('core.Address', blank=True, null=True, on_delete=models.SET_NULL)
     bio = models.TextField(blank=True, null=True)
-    gender = models.CharField(default="Others", blank=True, null=True, max_length=6, help_text="Gender", choices=GENDER)
+    gender = models.CharField(default="Others", blank=True, null=True, max_length=6, choices=GENDER)
     fb_link = models.URLField(blank=True, null=True)
     tw_link = models.URLField(blank=True, null=True)
     github_link = models.URLField(blank=True, null=True)
@@ -107,19 +102,20 @@ class UserProfile(models.Model):
     
 
     def __str__(self):
-        if self.fullname:
-            return self.fullname
-        else:
-            return self.user.username
+        return f'{self.fullname}'
+
 
 
 
 def userprofile_receiver(sender, instance, created, *args, **kwargs):
     if created:
         userprofile = UserProfile.objects.create(user=instance)
-
+        userprofile.slug = userprofile.user.username
+        userprofile.save()
 
 post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
+
+
 
 class Address(models.Model):
     user = models.ForeignKey(UserProfile,
@@ -136,3 +132,6 @@ class Address(models.Model):
 
     def __str__(self):
         return f'{self.user.user.username} - {self.street_address[:10]}' # self.user.user.username
+
+    
+    

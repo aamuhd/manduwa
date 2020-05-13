@@ -66,17 +66,19 @@
               {% comment %} {% else %} {% endcomment %}
                 
               {% endif %}
-                <a class="dropdown-item" href="#">Dashboard
+              
+                <a class="dropdown-item" href="{% url 'core:user' user.profile.slug %}">Dashboard
                   <i class="far fa-user-circle mr-2 text-info"></i>
                 </a>
-                <a class="dropdown-item" href=""> Logout
+                <a class="dropdown-item" href="{% url 'account:logout' %}"> Logout
                   <i class="fas fa-sign-out-alt text-danger"></i>
-                </a>
+                </a> 
+            
             {% else %}
-                <a class="dropdown-item" href="">
+                <a class="dropdown-item" href="{% url 'account:login' %}">
                   <i class="fas fa-sign-in-alt text-danger"></i>Login
                 </a>
-                <a class="dropdown-item" href="">
+                <a class="dropdown-item" href="{% url 'account:register' %}">
                   <i class="fas fa-user-plus text-warning"></i>Signup
                 </a>
             {% endif %}

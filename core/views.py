@@ -2,7 +2,10 @@ from django.views.generic import ListView, DetailView, View
 from .helpers import Egg
 from .models import MainPage, HomePageSlider, UserProfile
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import reverse, render
+from django.shortcuts import reverse, render, redirect
+from .forms import UserProfileForm
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 # from blog.models import Post
 
 
@@ -37,3 +40,31 @@ class MainPageDetailView(DetailView):
 def contactView(request):
     next_url = reverse('audience:contact')
     return HttpResponseRedirect(next_url)
+
+
+
+def user(request, slug_id):
+
+    
+    profile = UserProfile.objects.get(slug=slug_id)
+    user = profile.user
+
+
+    if request.method != 'POST':
+        form = UserProfileForm(instance=profile)
+    else:
+        form = UserProfileForm(instance=profile, data=request.POST)
+        if form.is_valid():
+            form.save()
+            
+            
+            return redirect('core:user', slug_id=slug_id)
+    context = {'profile': profile, 'form': form, 'user': user}
+    
+    return render(request, 'core/user.html', context)
+
+    
+
+    
+    
+

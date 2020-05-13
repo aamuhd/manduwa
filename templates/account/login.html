@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Register{% endblock title %}
+{% block extra_head %}  
+{% endblock extra_head %}
+{% block content %}
+  
+<div class="container">
+    <form action="/account/login/" method="post" style="padding-left: 300px; padding-right: 300px; padding-top:30px;">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputText">Username</label>
+            <input type="text" class="form-control" id="exampleInputText" width=50px; name="username">
+          </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" width=50px; name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <div>
+        {% for message in messages %}
+        <h1>{{ message }}</h1>
+        {% endfor %}
+      </div>
+     
+</div>
+            
+
+
+{% endblock content %}
+
+{% block extra_body %}
+{% endblock extra_body %}
+
+{% block extra_scripts %}
+{% endblock extra_scripts %}

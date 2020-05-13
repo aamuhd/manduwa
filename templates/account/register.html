@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Register{% endblock title %}
+{% block extra_head %}  
+{% endblock extra_head %}
+{% block content %}
+     
+        
+            <form method="post" action="/account/register/" style="padding-left: 300px; padding-right: 300px; padding-top:30px;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" class="form-control" id="fname" width=50px; name="first_name">
+                  </div>
+                  <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" class="form-control" id="lname" width=50px; name="last_name">
+                  </div>
+                  <div class="form-group">
+                    <label for="addr">Email</label>
+                    <input type="text" class="form-control" id="addr" width=50px; name="email">
+                  </div>
+                  <div class="form-group">
+                    <label for="uname">Username</label>
+                    <input type="text" class="form-control" id="uname" width=50px; name="username">
+                  </div>
+                <div class="form-group">
+                  <label for="Password1">Password</label>
+                  <input type="password" class="form-control" id="Password1" width=50px; name="password1">
+                </div>
+                <div class="form-group">
+                    <label for="Password2">Confirm Password</label>
+                    <input type="password" class="form-control" id="Password2" width=50px; name="password2">
+                  </div>
+                <button type="submit" class="btn btn-primary">Sing Up</button>
+
+                <div>
+                  {% for message in messages %}
+                     <h1>{{ message}}</h1>
+                  {% endfor %}
+                </div>
+                
+              </form>
+{% endblock content %}
+
+{% block extra_body %}
+{% endblock extra_body %}
+
+{% block extra_scripts %}
+{% endblock extra_scripts %}
+

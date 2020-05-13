@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     #my apps
     'core',
+    'account',
+    
 
     #third party apps
     'ckeditor',

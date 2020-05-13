@@ -21,6 +21,8 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    path('account/', include('account.urls')),
+    
 ]
 
 if settings.DEBUG:
@@ -33,6 +35,6 @@ if settings.DEBUG:
         
 urlpatterns += [ path('', include( ('core.urls', 'core'), namespace='core' )) ]
 
-admin.site.site_header = 'Manduwa'
-admin.site.index_title = 'Manduwa Admin Interface'
-admin.site.site_title = 'Manduwa'
+admin.site.site_header = 'Hospital Management System'
+admin.site.index_title = 'Hospital Admin Interface'
+admin.site.site_title = 'My Clinic'
